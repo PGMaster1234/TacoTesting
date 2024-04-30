@@ -1,6 +1,6 @@
 # Taco DataSet
 
-# Instructions to Run
+## Instructions to Run
 
 - Download Annotations file from https://github.com/pedropro/TACO/tree/master/data
 
