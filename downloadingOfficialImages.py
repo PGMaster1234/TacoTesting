@@ -6,26 +6,33 @@ import requests
 from io import BytesIO
 import sys
 
-parser = argparse.ArgumentParser(description='')
-parser.add_argument('--dataset_path', required=False, default=os.path.join(os.path.expanduser("~"), "Desktop/LNN/TACO Stuff/data/annotations.json"), help='Path to annotations')
+parser = argparse.ArgumentParser(description="")
+parser.add_argument(
+    "--dataset_path",
+    required=False,
+    default=os.path.join(os.path.expanduser("~"), "./data/annotations.json"),
+    help="Path to annotations",
+)
 args = parser.parse_args()
 
 dataset_dir = os.path.dirname(args.dataset_path)
 
-print('Note. If for any reason the connection is broken. Just call me again and I will start where I left.')
+print(
+    "Note. If for any reason the connection is broken. Just call me again and I will start where I left."
+)
 
 # Load annotations
-with open(args.dataset_path, 'r') as f:
+with open(args.dataset_path, "r") as f:
     annotations = json.loads(f.read())
 
-    nr_images = len(annotations['images'])
+    nr_images = len(annotations["images"])
     for i in range(nr_images):
 
-        image = annotations['images'][i]
+        image = annotations["images"][i]
 
-        file_name = image['file_name']
-        url_original = image['flickr_url']
-        url_resized = image['flickr_640_url']
+        file_name = image["file_name"]
+        url_original = image["flickr_url"]
+        url_resized = image["flickr_640_url"]
 
         file_path = os.path.join(dataset_dir, file_name)
 
@@ -46,8 +53,11 @@ with open(args.dataset_path, 'r') as f:
         # Show loading bar
         bar_size = 30
         x = int(bar_size * i / nr_images)
-        sys.stdout.write("%s[%s%s] - %i/%i\r" % ('Loading: ', "=" * x, "." * (bar_size - x), i, nr_images))
+        sys.stdout.write(
+            "%s[%s%s] - %i/%i\r"
+            % ("Loading: ", "=" * x, "." * (bar_size - x), i, nr_images)
+        )
         sys.stdout.flush()
         i += 1
 
-    sys.stdout.write('Finished\n')
+    sys.stdout.write("Finished\n")
